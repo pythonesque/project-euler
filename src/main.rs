@@ -7,6 +7,7 @@ use problems::{
     p6,
     p7,
     p8,
+    p9,
 };
 use std::os;
 
@@ -27,6 +28,7 @@ fn main() {
                 6 => p6::run(),
                 7 => p7::run(),
                 8 => p8::run(),
+                9 => p9::run(),
                 _ => println!("Invalid problem number."),
             },
             _ => println!("Not a number."),
