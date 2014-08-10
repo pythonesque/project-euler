@@ -1,4 +1,8 @@
-use problems::{p1, p2};
+use problems::{
+    p1,
+    p2,
+    p3,
+};
 use std::os;
 
 mod problems;
@@ -12,6 +16,7 @@ fn main() {
             Some(n) => match n {
                 1 => p1::run(),
                 2 => p2::run(),
+                3 => p3::run(),
                 _ => println!("Invalid problem number."),
             },
             _ => println!("Not a number."),
