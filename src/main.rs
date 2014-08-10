@@ -1,3 +1,5 @@
+extern crate num;
+
 use problems::{
     p1,
     p2,
@@ -13,6 +15,7 @@ use problems::{
     p12,
     p13,
     p14,
+    p15,
 };
 use std::os;
 
@@ -39,6 +42,7 @@ fn main() {
                 12 => p12::run(),
                 13 => p13::run(),
                 14 => p14::run(),
+                15 => p15::run(),
                 _ => println!("Invalid problem number."),
             },
             _ => println!("Not a number."),

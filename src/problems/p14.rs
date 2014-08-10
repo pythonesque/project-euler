@@ -8,6 +8,6 @@ pub fn run() {
             iterate( |n| if n & 1 == 0 { n / 2 } else { 3 * n + 1}, num) // Collatz
                 .take_while( |&n| n != 1 )
                 .count()
-        });
+        }).unwrap();
     println!("{}", max_collatz);
 }

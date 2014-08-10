@@ -1,5 +1,6 @@
 use std::collections::bitv::Bitv;
 use std::iter::range_step;
+use std::num::{One, Unsigned, Zero};
 
 pub mod p1;
 pub mod p2;
@@ -15,6 +16,7 @@ pub mod p11;
 pub mod p12;
 pub mod p13;
 pub mod p14;
+pub mod p15;
 
 // Sieve of Eratosthenes
 pub struct Sieve {
@@ -29,6 +31,16 @@ pub fn sieve(max: uint) -> Sieve {
         max: (max as f64).sqrt() as uint, // rounds down
         sieve: Bitv::with_capacity(max - 1, true),
     }
+}
+
+pub fn factorial<T: Clone + Mul<T,T> + One + Sub<T,T> + Unsigned + Zero>(n: &T) -> T {
+    let mut n = n.clone();
+    let mut fact: T = One::one();
+    while !n.is_zero() {
+        fact = fact * n;
+        n = n - One::one();
+    }
+    fact
 }
 
 impl Iterator<uint> for Sieve {
