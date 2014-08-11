@@ -18,6 +18,7 @@ pub mod p13;
 pub mod p14;
 pub mod p15;
 pub mod p16;
+pub mod p17;
 
 // Sieve of Eratosthenes
 pub struct Sieve {
