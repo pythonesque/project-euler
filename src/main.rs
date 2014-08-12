@@ -19,6 +19,7 @@ use problems::{
     p16,
     p17,
     p18,
+    p19,
     p67,
 };
 use std::os;
@@ -50,6 +51,7 @@ fn main() {
                 16 => p16::run(),
                 17 => p17::run(),
                 18 => p18::run(),
+                19 => p19::run(),
                 67 => p67::run(),
                 _ => println!("Invalid problem number."),
             },
