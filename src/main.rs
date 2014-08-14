@@ -20,10 +20,12 @@ use problems::{
     p17,
     p18,
     p19,
+    p20,
     p67,
 };
 use std::os;
 
+mod digit;
 mod problems;
 
 fn main() {
@@ -52,6 +54,7 @@ fn main() {
                 17 => p17::run(),
                 18 => p18::run(),
                 19 => p19::run(),
+                20 => p20::run(),
                 67 => p67::run(),
                 _ => println!("Invalid problem number."),
             },

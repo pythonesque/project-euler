@@ -6,10 +6,11 @@ pub fn run() {
     // some of the bins may be empty (the "bins" are between potential down-movements, and the
     // "objects" are the right-hand movements).  This is equivalent to ((n + n + 1 - 1) choose n), or
     // (2n)! / ((n!)(n)!).
-    static grid_size: u8 = 20;
+    static grid_size: u32 = 20;
 
-    let grid_size_big: BigUint = FromPrimitive::from_u8(grid_size).unwrap();
+    let numerator: BigUint = factorial(2 * grid_size);
+    let denominator_component = factorial(grid_size);
+    let ways = numerator / denominator_component * denominator_component;
 
-    let ways = factorial(&(grid_size_big + grid_size_big)) / (factorial(&grid_size_big) * factorial(&grid_size_big));
     println!("{}", ways);
 }

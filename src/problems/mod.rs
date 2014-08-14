@@ -1,6 +1,7 @@
 use std::collections::bitv::Bitv;
+use std::fmt;
 use std::iter::range_step;
-use std::num::{One, Unsigned, Zero};
+use std::num::{One, Zero};
 
 pub mod p1;
 pub mod p2;
@@ -21,6 +22,7 @@ pub mod p16;
 pub mod p17;
 pub mod p18;
 pub mod p19;
+pub mod p20;
 pub mod p67;
 
 // Sieve of Eratosthenes
@@ -38,11 +40,12 @@ pub fn sieve(max: uint) -> Sieve {
     }
 }
 
-pub fn factorial<T: Clone + Mul<T,T> + One + Sub<T,T> + Unsigned + Zero>(n: &T) -> T {
-    let mut n = n.clone();
+pub fn factorial<T: Clone + Mul<T,T> + One + Zero + fmt::Show>(mut n: u32) -> T {
     let mut fact: T = One::one();
+    let mut fact_n: T = Zero::zero();
     while !n.is_zero() {
-        fact = fact * n;
+        fact_n = fact_n + One::one();
+        fact = fact * fact_n;
         n = n - One::one();
     }
     fact
