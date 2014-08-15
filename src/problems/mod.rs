@@ -1,7 +1,8 @@
-use std::collections::bitv::Bitv;
 use std::fmt;
-use std::iter::range_step;
-use std::num::{One, Zero};
+use std::collections::bitv::Bitv;
+use std::collections::hashmap::{HashSet};
+use std::iter::{range_step};
+use std::num::{One, pow, Zero};
 
 pub mod p1;
 pub mod p2;
@@ -23,6 +24,7 @@ pub mod p17;
 pub mod p18;
 pub mod p19;
 pub mod p20;
+pub mod p21;
 pub mod p67;
 
 // Sieve of Eratosthenes
@@ -35,8 +37,8 @@ pub struct Sieve {
 pub fn sieve(max: uint) -> Sieve {
     Sieve {
         min: 0u,
-        max: (max as f64).sqrt() as uint, // rounds down
-        sieve: Bitv::with_capacity(max - 1, true),
+        max: if max < 2 { 0 } else { (max as f64).sqrt() as uint } , // rounds down
+        sieve: Bitv::with_capacity(if max == 0 { 0 } else { max - 1 }, true),
     }
 }
 
@@ -74,4 +76,31 @@ impl Iterator<uint> for Sieve {
         self.max = self.sieve.len();
         None
     }
+}
+
+pub fn factor<'a, T: Iterator<&'a uint>>(n: uint, primes: T) -> HashSet<uint> {
+    let max_prime = n / 2;
+    let mut num_factors = 1;
+    let prime_factors: Vec<(uint, uint)> = primes
+        .take_while( |& &p| p <= max_prime)
+        .filter_map( |&p| {
+            let mut n = n;
+            let mut q = 1;
+            while n % p == 0 {
+                q += 1;
+                n /= p;
+            }
+            if q == 1 {
+                None
+            } else {
+                num_factors *= q;
+                Some((p, q))
+            }
+        })
+        .collect();
+    let factors = range(0, num_factors)
+        .map( |i| prime_factors.iter()
+            .fold( (1, i), |(fact, i), &(p, q)| (fact * pow(p, i % q), i / q) ).val0() )
+        .collect();
+    factors
 }
