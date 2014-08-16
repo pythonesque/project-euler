@@ -1,4 +1,5 @@
 use std::cmp::{max, min};
+use std::hash;
 use std::iter::iterate;
 use std::fmt;
 use std::fmt::Show;
@@ -6,7 +7,7 @@ use std::mem;
 use std::num::{One, Zero};
 use std::u8;
 
-#[deriving(Clone, Default, Eq, Ord, PartialEq, PartialOrd)]
+#[deriving(Clone, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Digit<B>(u8);
 
 impl<B: Base> fmt::Show for Digit<B> {
@@ -63,8 +64,14 @@ pub trait Base {
     fn fmt(digit: &Digit<Self>, f: &mut fmt::Formatter) -> fmt::Result;
 }
 
-#[deriving(Clone)]
+#[deriving(Clone, Eq, PartialEq)]
 pub struct Base10;
+
+impl<H: hash::Writer> hash::Hash<H> for Base10 {
+    fn hash(&self, hasher: &mut H) {
+        ().hash(hasher)
+    }
+}
 
 impl Base for Base10 {
     fn base(_: Option<Base10>) -> u8 { 10 }
@@ -74,7 +81,7 @@ impl Base for Base10 {
     }
 }
 
-#[deriving(Clone, Default, Eq, Ord, PartialEq, PartialOrd)]
+#[deriving(Clone, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Digits<B>(Vec<Digit<B>>);
 
 impl<B: Base> Digits<B> {

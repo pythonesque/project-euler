@@ -1,3 +1,5 @@
+#![feature(default_type_params)]
+
 extern crate num;
 
 use std::os;
@@ -40,6 +42,7 @@ fn main() {
                 26 => problems::p26::run(),
                 27 => problems::p27::run(),
                 28 => problems::p28::run(),
+                29 => problems::p29::run(),
                 67 => problems::p67::run(),
                 _ => println!("Invalid problem number."),
             },
