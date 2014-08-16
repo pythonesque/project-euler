@@ -36,6 +36,7 @@ fn main() {
                 22 => problems::p22::run(),
                 23 => problems::p23::run(),
                 24 => problems::p24::run(),
+                25 => problems::p25::run(),
                 67 => problems::p67::run(),
                 _ => println!("Invalid problem number."),
             },
