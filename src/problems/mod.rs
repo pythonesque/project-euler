@@ -26,6 +26,7 @@ pub mod p19;
 pub mod p20;
 pub mod p21;
 pub mod p22;
+pub mod p23;
 pub mod p67;
 
 // Sieve of Eratosthenes
@@ -123,9 +124,10 @@ pub fn factor<'a, T: Iterator<&'a uint>>(n: uint, primes: T) -> HashSet<uint> {
             }
         })
         .collect();
-    let factors = range(0, num_factors)
+    let mut factors: HashSet<uint> = range(0, num_factors)
         .map( |i| prime_factors.iter()
             .fold( (1, i), |(fact, i), &(p, q)| (fact * pow(p, i % q), i / q) ).val0() )
         .collect();
+    factors.insert(n);
     factors
 }

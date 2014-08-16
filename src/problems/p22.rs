@@ -22,13 +22,6 @@ pub fn run() {
         }
     }
     quicksort(names.as_mut_slice());
-    for name_window in names.as_slice().windows(2) {
-        let ref first = name_window[0];
-        let ref second = name_window[1];
-        if second < first {
-            println!("{}, {}", first, second);
-        }
-    }
     let sum = names.move_iter()
         .enumerate()
         .map( |(i, name)|
