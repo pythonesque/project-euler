@@ -2,7 +2,7 @@ use digit::{Digits, Base10};
 use std::iter::AdditiveIterator;
 use std::num::from_u32;
 
-pub fn run() {
+euler_problem!(b"27a1779a8a8c323a307ac8a70bc4489d", w, {
     // Cannot be written as sum of 5th powers if n * 9^5 < 10^n
     // log(n * 9^5) < n
     // log(n) + 5log(9) < n
@@ -24,5 +24,5 @@ pub fn run() {
                 (dec * 10, sum + dec * n.value() as u32) ).val1();
             sum == sum_pow_5s
         }).sum();
-    println!("{}", sum);
-}
+    write!(w, "{}", sum)
+})

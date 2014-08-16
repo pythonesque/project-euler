@@ -1,8 +1,8 @@
-use problems::sieve;
+use math::sieve;
 use std::collections::hashmap::HashSet;
 use std::num::abs;
 
-pub fn run() {
+euler_problem!(b"69d9e3218fd7abb6ff453ea96505183d", w, {
     static coeff: uint = 1000;
     static prime_ub: uint = 10_000; // Guess
     let mut max = (0, 0, 0);
@@ -27,5 +27,5 @@ pub fn run() {
             }
         }
     }
-    println!("{}", max.val0() * max.val1());
-}
+    write!(w, "{}", max.val0() * max.val1())
+})

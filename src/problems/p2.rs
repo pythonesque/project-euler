@@ -1,6 +1,6 @@
 use std::mem::swap;
 
-pub fn run() {
+euler_problem!(b"4194eb91842c8e7e6df099ca73c38f28", w, {
     let (mut fib_i, mut fib_j) = (1, 2);
     let mut sum_even = 0;
     while fib_i <= 4_000_000u {
@@ -10,5 +10,5 @@ pub fn run() {
         swap(&mut fib_i, &mut fib_j);
         fib_j += fib_i
     }
-    println!("{}", sum_even);
-}
+    write!(w, "{}", sum_even)
+})

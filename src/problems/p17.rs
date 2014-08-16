@@ -45,7 +45,7 @@ fn number_to_word(number: u16) -> MaybeOwned<'static> {
     }
 }
 
-pub fn run() {
+euler_problem!(b"6a979d4a9cf85135408529edc8a133d0", w, {
     let number_count_sum = range_inclusive(1, 1000).map(number_to_word).map(|word| word.len()).sum();
-    println!("{}", number_count_sum);
-}
+    write!(w, "{}", number_count_sum)
+})

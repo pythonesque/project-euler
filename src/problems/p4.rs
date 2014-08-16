@@ -1,4 +1,4 @@
-pub fn run() {
+euler_problem!(b"d4cfc27d16ea72a96b83d9bdef6ce2ec", w, {
     // Assuming the *largest* palindrome will have at least 6 digits
     let min = 99_999f64.sqrt() as u32 + 1;
     let mut max = 0;
@@ -24,5 +24,5 @@ pub fn run() {
             max = k;
         }
     }
-    println!("{}", max);
-}
+    write!(w, "{}", max)
+})

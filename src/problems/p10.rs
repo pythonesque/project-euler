@@ -1,8 +1,8 @@
 use std::iter::AdditiveIterator;
-use problems::sieve;
+use math::sieve;
 
-pub fn run() {
+euler_problem!(b"d915b2a9ac8749a6b837404815f1ae25", w, {
     static max: uint = 2_000_000;
     let sum_primes = sieve(max - 1).sum();
-    println!("{}", sum_primes);
-}
+    write!(w, "{}", sum_primes)
+})

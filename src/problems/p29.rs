@@ -3,7 +3,7 @@ use std::collections::hashmap::HashSet;
 use std::iter::range_inclusive;
 use std::num::from_u8;
 
-pub fn run() {
+euler_problem!(b"6f0ca67289d79eb35d19decbc0a08453", w, {
     static max: u8 = 100;
     let mut set = HashSet::new();
     for a in range_inclusive(2, max) {
@@ -14,5 +14,5 @@ pub fn run() {
             set.insert(c.clone());
         }
     }
-    println!("{}", set.len());
-}
+    write!(w, "{}", set.len())
+})

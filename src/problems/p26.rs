@@ -19,10 +19,10 @@ pub fn reciprocal_cycle(n: u64) -> u16 {
     return 0;
 }
 
-pub fn run() {
+euler_problem!(b"6aab1270668d8cac7cef2566a1c5f569", w, {
     static max_denominator: u64 = 1000;
     let max = range(1, max_denominator)
         .max_by( |&n| reciprocal_cycle(n) )
         .unwrap();
-    println!("{}", max);
-}
+    write!(w, "{}", max)
+})

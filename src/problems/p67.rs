@@ -1,6 +1,6 @@
 use problems::p18::max_triangle_path;
 
-pub fn run() {
+euler_problem!(b"9d702ffd99ad9c70ac37e506facc8c38", w, {
     static rows: uint = 100;
     static triangle: [u8, .. rows * (rows + 1) / 2] = [
         59,
@@ -106,5 +106,5 @@ pub fn run() {
     ];
     // Reuse the solution from problem 18
     let max = max_triangle_path(triangle.as_slice(), rows);
-    println!("{}", max);
-}
+    write!(w, "{}", max)
+})

@@ -1,8 +1,63 @@
-use std::fmt;
-use std::collections::bitv::Bitv;
-use std::collections::hashmap::{HashSet};
-use std::iter::{range_step};
-use std::num::{One, pow, Zero};
+#[cfg(test)]
+pub static SHA_SIZE: uint = 32;
+
+macro_rules! euler_problem(
+    ($hash:expr, $writer:ident, $body: block) => (
+        pub fn run<T: Writer>($writer: &mut T) -> ::std::io::IoResult<()> {
+            $body
+        }
+
+        #[cfg(test)]
+        mod test {
+            #[test]
+            pub fn test() {
+                let mut process = match ::std::io::Command::new("md5sum").spawn() {
+                    Ok(p) => p,
+                    Err(e) => {
+                        drop(write!(::std::io::stderr(), "Test ignored: I/O error {}", e));
+                        return
+                    }
+                };
+                match process.stdin.take() {
+                    Some(mut stdin) => match super::run(&mut stdin) {
+                        Ok(p) => p,
+                        Err(e) => {
+                            drop(write!(::std::io::stderr(), "Test ignored: I/O error {}", e));
+                            return
+                        }
+                    },
+                    None => {
+                        drop(write!(::std::io::stderr(), "Test ignored: No standard input."));
+                        return
+                    }
+                }
+                let mut hash = [0u8, .. ::problems::SHA_SIZE];
+                match process.stdout {
+                    Some(ref mut stdout) => match stdout.read_at_least(::problems::SHA_SIZE, hash) {
+                        Ok(_) => (),
+                        Err(e) => {
+                            drop(write!(::std::io::stderr(), "Test ignored: I/O error {}", e));
+                            return
+                        }
+                    },
+                    None => {
+                        drop(write!(::std::io::stderr(), "Test ignored: No standard output."));
+                        return
+                    }
+                }
+                let status = match process.wait() {
+                    Ok(s) => s,
+                    Err(e) => {
+                        drop(write!(::std::io::stderr(), "Test ignored: I/O error {}", e));
+                        return
+                    }
+                };
+                assert!(status.success());
+                assert!(hash.as_slice() == $hash);
+            }
+        }
+    )
+)
 
 pub mod p1;
 pub mod p2;
@@ -36,105 +91,49 @@ pub mod p29;
 pub mod p30;
 pub mod p67;
 
-// Sieve of Eratosthenes
-pub struct Sieve {
-    min: uint,
-    max: uint,
-    sieve: Bitv,
-}
+#[cfg(not(test))]
+pub mod main {
+    use std::io::IoError;
 
-pub fn quicksort<'a, T: Clone + Ord>(array: &'a mut [T]) {
-    let n = array.len();
-    if n < 2 { return }
-    let p = {
-        // choose pivot
-        let pivot_index = (n - 1) / 2;
-        // partition
-        let pivot_value = array[pivot_index].clone();
-        array.swap(pivot_index, n - 1);
-        let mut store_index = 0;
-        for i in range(0, n - 1) {
-            if array[i] < pivot_value {
-                array.swap(i, store_index);
-                store_index += 1;
-            }
-        }
-        array.swap(store_index, n - 1);
-        store_index
-    };
-    if p > 0 { quicksort(array.mut_slice(0, p)) }
-    if p + 1 < n { quicksort(array.mut_slice(p + 1, n)) }
-
-}
-
-pub fn sieve(max: uint) -> Sieve {
-    Sieve {
-        min: 0u,
-        max: if max < 2 { 0 } else { (max as f64).sqrt() as uint } , // rounds down
-        sieve: Bitv::with_capacity(if max == 0 { 0 } else { max - 1 }, true),
+    pub enum ProblemErrorKind {
+        InvalidProblemNumber,
+        ProblemIoError(IoError),
     }
-}
 
-pub fn factorial<T: Clone + Mul<T,T> + One + Zero + fmt::Show>(mut n: u32) -> T {
-    let mut fact: T = One::one();
-    let mut fact_n: T = Zero::zero();
-    while !n.is_zero() {
-        fact_n = fact_n + One::one();
-        fact = fact * fact_n;
-        n = n - One::one();
+    pub fn solve<T: Writer>(w: &mut T, n: u32) -> Result<(), ProblemErrorKind> {
+        match n {
+            1 => super::p1::run(w),
+            2 => super::p2::run(w),
+            3 => super::p3::run(w),
+            4 => super::p4::run(w),
+            5 => super::p5::run(w),
+            6 => super::p6::run(w),
+            7 => super::p7::run(w),
+            8 => super::p8::run(w),
+            9 => super::p9::run(w),
+            10 => super::p10::run(w),
+            11 => super::p11::run(w),
+            12 => super::p12::run(w),
+            13 => super::p13::run(w),
+            14 => super::p14::run(w),
+            15 => super::p15::run(w),
+            16 => super::p16::run(w),
+            17 => super::p17::run(w),
+            18 => super::p18::run(w),
+            19 => super::p19::run(w),
+            20 => super::p20::run(w),
+            21 => super::p21::run(w),
+            22 => super::p22::run(w),
+            23 => super::p23::run(w),
+            24 => super::p24::run(w),
+            25 => super::p25::run(w),
+            26 => super::p26::run(w),
+            27 => super::p27::run(w),
+            28 => super::p28::run(w),
+            29 => super::p29::run(w),
+            30 => super::p30::run(w),
+            67 => super::p67::run(w),
+            _ => return Err(InvalidProblemNumber)
+        }.map_err( |err| ProblemIoError(err) )
     }
-    fact
-}
-
-impl Iterator<uint> for Sieve {
-    fn next(&mut self) -> Option<uint> {
-        for i in range(self.min, self.max) {
-            if self.sieve[i] {
-                self.min = i + 1;
-                let prime = self.min + 1;
-                for j in range_step(prime * prime - 2, self.sieve.len(), prime) {
-                    self.sieve.set(j, false);
-                }
-                return Some(prime)
-            }
-        }
-        for i in range(self.max, self.sieve.len()) {
-            if self.sieve[i] {
-                self.max = i + 1;
-                self.min = self.max;
-                let prime = self.max + 1;
-                return Some(prime)
-            }
-        }
-        self.max = self.sieve.len();
-        None
-    }
-}
-
-pub fn factor<'a, T: Iterator<&'a uint>>(n: uint, primes: T) -> HashSet<uint> {
-    let max_prime = n / 2;
-    let mut num_factors = 1;
-    let prime_factors: Vec<(uint, uint)> = primes
-        .take_while( |& &p| p <= max_prime)
-        .filter_map( |&p| {
-            let mut n = n;
-            let mut q = 1;
-            while n % p == 0 {
-                q += 1;
-                n /= p;
-            }
-            if q == 1 {
-                None
-            } else {
-                num_factors *= q;
-                Some((p, q))
-            }
-        })
-        .collect();
-    let mut factors: HashSet<uint> = range(0, num_factors)
-        .map( |i| prime_factors.iter()
-            .fold( (1, i), |(fact, i), &(p, q)| (fact * pow(p, i % q), i / q) ).val0() )
-        .collect();
-    factors.insert(n);
-    factors
 }

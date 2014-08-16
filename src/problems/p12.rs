@@ -1,11 +1,11 @@
-use problems::sieve;
+use math::sieve;
 use std::collections::hashmap::HashMap;
 
 fn triangular(n: u32) -> u32 {
     n * (n + 1) / 2
 }
 
-pub fn run() {
+euler_problem!(b"8091de7d285989bbfa9a2f9f3bdcc7c0", w, {
     // Triangular numbers are just those equal to n(n+1)/2.  n and n+1 are always relative primes.
     // Counting divisors: by Fundamental Theorem of Arithmetic, every natural number can be uniquely
     // identified as a product of primes up to reordering of the primes.  The number of divisors is
@@ -32,8 +32,9 @@ pub fn run() {
         // factors.
         let num_factors = factors.iter().fold(1, |num_factors, (_, &exp)| num_factors * (exp + 1) );
         if num_factors > 500 {
-            println!("{}", tri);
+            try!(write!(w, "{}", tri));
             break;
         }
     }
-}
+    Ok(())
+})

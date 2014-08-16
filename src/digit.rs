@@ -10,7 +10,7 @@ use std::u8;
 #[deriving(Clone, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Digit<B>(u8);
 
-impl<B: Base> fmt::Show for Digit<B> {
+impl<B: Base> Show for Digit<B> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         Base::fmt(self, f)
     }
@@ -147,7 +147,7 @@ impl<B: Base> FromPrimitive for Digits<B> {
     }
 }
 
-impl<B: Base> fmt::Show for Digits<B> {
+impl<B: Base> Show for Digits<B> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
          for digit in self.get_ref().iter().rev() {
              try!(digit.fmt(f))

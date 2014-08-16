@@ -1,9 +1,9 @@
-use problems::quicksort;
+use sort::quicksort;
 use std::ascii::{AsciiCast, AsciiStr};
 use std::iter::AdditiveIterator;
 use std::io::{BufferedReader, File};
 
-pub fn run() {
+euler_problem!(b"f2c9c91cb025746f781fa4db8be3983f", w, {
     static path: &'static str = "data/names.txt";
     let mut names = Vec::new();
     {
@@ -29,5 +29,5 @@ pub fn run() {
                 .map( |ch| (ch - b'A' + 1) as uint)
                 .sum()
         ).sum();
-    println!("{}", sum);
-}
+    write!(w, "{}", sum)
+})

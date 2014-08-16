@@ -1,7 +1,7 @@
-use problems::{sieve, factor};
+use math::{sieve, factor};
 use std::iter::{AdditiveIterator, range_inclusive};
 
-pub fn run() {
+euler_problem!(b"51e04cd4e55e7e415bf24de9e1b0f3ff", w, {
     static max: uint = 10_000;
     let primes: Vec<uint> = sieve(max / 2).collect();
     let mut div_sums = [0u, .. max];
@@ -16,5 +16,5 @@ pub fn run() {
             div_sums[n - 1] = sum;
         }
     }
-    println!("{}", amicable_sum);
-}
+    write!(w, "{}", amicable_sum)
+})

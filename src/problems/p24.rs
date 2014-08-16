@@ -1,4 +1,4 @@
-pub fn run() {
+euler_problem!(b"7f155b45cb3f0a6e518d59ec348bff84", w, {
     static max: uint = 10;
     static permute_max: uint = 1_000_000;
     let mut digits = [0u8, .. max];
@@ -30,7 +30,7 @@ pub fn run() {
         }
     }
     for digit in digits.iter() {
-        print!("{}", digit);
+        try!(write!(w, "{}", digit))
     }
-    println!("");
-}
+    Ok(())
+})

@@ -1,6 +1,6 @@
 use std::iter::iterate;
 
-pub fn run() {
+euler_problem!(b"5052c3765262bb2c6be537abd60b305e", w, {
     static max: u32 = 1_000_000;
     /* Brute force approach */
     let max_collatz = range(2, max)
@@ -9,5 +9,5 @@ pub fn run() {
                 .take_while( |&n| n != 1 )
                 .count()
         }).unwrap();
-    println!("{}", max_collatz);
-}
+    write!(w, "{}", max_collatz)
+})

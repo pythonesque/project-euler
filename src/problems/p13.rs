@@ -117,7 +117,7 @@ fn add(digit: uint, carry: u16) -> (u8, u16) {
     (remainder as u8, carry)
 }
 
-pub fn run() {
+euler_problem!(b"361113f19fd302adc31268f8283a4f2d", w, {
     static remember_digits: uint = 10; // Number of digits to remember
     // Why my own ring buffer?  Just because :)
     let mut answer: [u8, ..remember_digits] = [0, ..remember_digits];
@@ -132,7 +132,7 @@ pub fn run() {
 
     for _ in range(0, remember_digits) {
         digit -= 1;
-        print!("{}", answer[digit % remember_digits]);
+        try!(write!(w, "{}", answer[digit % remember_digits]))
     }
-    println!("");
-}
+    Ok(())
+})

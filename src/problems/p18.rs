@@ -25,7 +25,7 @@ pub fn max_triangle_path(mut triangle: &[u8], rows: uint) -> u16 {
     *fast_paths.iter().max_by( |&weight| weight ).unwrap()
 }
 
-pub fn run() {
+euler_problem!(b"708f3cf8100d5e71834b1db77dfa15d6", w, {
     static rows: uint = 15;
     static triangle: [u8, .. rows * (rows + 1) / 2] = [
          75,
@@ -46,5 +46,5 @@ pub fn run() {
     ];
 
     let max = max_triangle_path(triangle.as_slice(), rows);
-    println!("{}", max);
-}
+    write!(w, "{}", max)
+})

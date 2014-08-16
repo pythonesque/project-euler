@@ -34,7 +34,7 @@ fn product((x, y): (uint, uint), (dx, dy): (int, int)) -> u32 {
     })
 }
 
-pub fn run() {
+euler_problem!(b"678f5d2e1eaa42f04fa53411b4f441ac", w, {
     // Largely brute force
     let mut max_product = 0;
     for y in range(0, gridsize) {
@@ -47,5 +47,5 @@ pub fn run() {
             }
         }
     }
-    println!("{}", max_product);
-}
+    write!(w, "{}", max_product)
+})

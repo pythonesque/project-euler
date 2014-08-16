@@ -1,4 +1,4 @@
-pub fn run() {
+euler_problem!(b"0d53425bd7c5bf9919df3718c8e49fa6", w, {
     // Let n = 2 * k + 1.
     // corner_0 = 1
     // corner_1 = (corner_0 + 8 * k)
@@ -17,5 +17,5 @@ pub fn run() {
         sum += 4 * (corner + 5 * k);
         corner += 8 * k;
     }
-    println!("{}", sum);
-}
+    write!(w, "{}", sum)
+})

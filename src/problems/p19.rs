@@ -171,7 +171,7 @@ impl DoubleEndedIterator<Day> for Day {
     }
 }
 
-pub fn run() {
+euler_problem!(b"a4a042cf4fd6bfb47701cbc8a1653ada", w, {
     static min_date: Date = Date { year: Year(1900), month: January, day: 1 };
     static min_day: Day = Monday;
     static start_date: Date = Date { year: Year(1901), month: January, day: 1 };
@@ -182,5 +182,5 @@ pub fn run() {
         .take_while( |&(date, _)| date != end_date )
         .filter( |&(date, day)| day == Sunday && date.day == 1)
         .count();
-    println!("{}", count);
-}
+    write!(w, "{}", count)
+})
