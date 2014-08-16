@@ -87,13 +87,11 @@ impl<B: Base> Digits<B> {
         value
     }
 
-    #[allow(dead_code)]
     pub fn get_mut_ref(&mut self) -> &mut Vec<Digit<B>> {
         let Digits(ref mut value) = *self;
         value
     }
 
-    #[allow(dead_code)]
     pub fn add_in_place(&mut self, other: &Digits<B>) {
         let (digits, other) = (self.get_mut_ref(), other.get_ref() );
         let mut move_iter = other.iter();
