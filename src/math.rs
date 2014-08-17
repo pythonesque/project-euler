@@ -44,15 +44,20 @@ impl Iterator<uint> for Sieve {
     }
 }
 
-pub fn factorial<T: Clone + Mul<T,T> + One + Zero + fmt::Show>(mut n: u32) -> T {
-    let mut fact: T = one();
-    let mut fact_n: T = zero();
-    while !n.is_zero() {
-        fact_n = fact_n + one();
-        fact = fact * fact_n;
-        n = n - one();
-    }
-    fact
+pub fn factorial<'a, T: Clone + Mul<T,T> + One + Zero + fmt::Show>() -> Unfold<'a, T, (Option<T>, T)> {
+    let one_: T = one();
+    let zero_: T = zero();
+    Unfold::new((Some(one_), zero_), |st| {
+        let &(ref mut fact, ref mut fact_n) = st;
+        *fact_n = *fact_n + one();
+        match fact.take() {
+            Some(f) => {
+                *fact = Some(f * *fact_n);
+                Some(f)
+            },
+            None => None
+        }
+    })
 }
 
 pub fn factor<'a, T: Iterator<&'a uint>>(n: uint, primes: T) -> HashSet<uint> {
