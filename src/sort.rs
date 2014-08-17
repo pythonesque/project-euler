@@ -1,3 +1,5 @@
+#![macro_escape]
+
 pub fn quicksort<'a, T: Clone + Ord>(array: &'a mut [T]) {
     let n = array.len();
     if n < 2 { return }
@@ -19,5 +21,12 @@ pub fn quicksort<'a, T: Clone + Ord>(array: &'a mut [T]) {
     };
     if p > 0 { quicksort(array.mut_slice(0, p)) }
     if p + 1 < n { quicksort(array.mut_slice(p + 1, n)) }
-
 }
+
+macro_rules! move_iterator(
+    ($x: expr, $y: expr) => (
+        for (a, b) in $x.mut_iter().zip($y) {
+            *a = b
+        }
+    )
+)

@@ -4,11 +4,13 @@
 extern crate libc;
 extern crate num;
 
+mod sort;
+
 mod digit;
 mod io;
 mod math;
+
 mod problems;
-mod sort;
 
 #[cfg(not(test))]
 pub mod main {
