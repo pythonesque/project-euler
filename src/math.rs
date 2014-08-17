@@ -1,3 +1,4 @@
+use num::bigint::BigUint;
 use std::collections::bitv::Bitv;
 use std::collections::hashmap::HashSet;
 use std::fmt;
@@ -130,3 +131,4 @@ impl Digits for u16 {}
 impl Digits for u32 {}
 impl Digits for u64 {}
 impl Digits for uint {}
+impl Digits for BigUint {}
