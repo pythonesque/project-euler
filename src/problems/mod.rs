@@ -93,6 +93,7 @@ pub mod p35;
 pub mod p36;
 pub mod p37;
 pub mod p38;
+pub mod p39;
 pub mod p41;
 pub mod p42;
 pub mod p43;
@@ -150,6 +151,7 @@ pub mod main {
             36 => super::p36::run(w),
             37 => super::p37::run(w),
             38 => super::p38::run(w),
+            39 => super::p39::run(w),
             41 => super::p41::run(w),
             42 => super::p42::run(w),
             43 => super::p43::run(w),
