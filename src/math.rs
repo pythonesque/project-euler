@@ -127,3 +127,4 @@ pub trait Digits: Zero + One + Div<Self, Self> + Mul<Self, Self> + Rem<Self, Sel
 }
 
 impl Digits for u32 {}
+impl Digits for uint {}
