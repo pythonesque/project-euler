@@ -21,4 +21,3 @@ pub fn quicksort<'a, T: Clone + Ord>(array: &'a mut [T]) {
     if p + 1 < n { quicksort(array.mut_slice(p + 1, n)) }
 
 }
-
