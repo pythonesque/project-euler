@@ -94,6 +94,7 @@ pub mod p34;
 pub mod p35;
 pub mod p36;
 pub mod p37;
+pub mod p38;
 pub mod p67;
 
 #[cfg(not(test))]
@@ -142,6 +143,7 @@ pub mod main {
             35 => super::p35::run(w),
             36 => super::p36::run(w),
             37 => super::p37::run(w),
+            38 => super::p38::run(w),
             67 => super::p67::run(w),
             _ => return Err(InvalidProblemNumber)
         }.map_err( |err| ProblemIoError(err) )
