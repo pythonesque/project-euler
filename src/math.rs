@@ -61,6 +61,12 @@ pub fn factorial<'a, T: Clone + Mul<T,T> + One + Zero + fmt::Show>() -> Unfold<'
     })
 }
 
+pub fn prime_factors<'a, T: Iterator<&'a uint>, C: FromIterator<uint>>(n: uint, primes: T) -> C {
+    primes.take_while( |& &p| p <= n).filter_map( |&p|
+        if n % p == 0 { Some(p) } else { None }
+    ).collect()
+}
+
 pub fn factor<'a, T: Iterator<&'a uint>>(n: uint, primes: T) -> HashSet<uint> {
     let max_prime = n / 2;
     let mut num_factors = 1;

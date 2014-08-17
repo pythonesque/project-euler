@@ -97,6 +97,7 @@ pub mod p37;
 pub mod p38;
 pub mod p41;
 pub mod p43;
+pub mod p47;
 pub mod p48;
 pub mod p67;
 
@@ -149,6 +150,7 @@ pub mod main {
             38 => super::p38::run(w),
             41 => super::p41::run(w),
             43 => super::p43::run(w),
+            47 => super::p47::run(w),
             48 => super::p48::run(w),
             67 => super::p67::run(w),
             _ => return Err(InvalidProblemNumber)
