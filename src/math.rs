@@ -1,7 +1,6 @@
 use num::bigint::BigUint;
 use std::collections::bitv::Bitv;
 use std::collections::hashmap::HashSet;
-use std::fmt;
 use std::iter::{range_step, Unfold};
 use std::num::{one, One, pow, zero, Zero};
 
@@ -45,7 +44,7 @@ impl Iterator<uint> for Sieve {
     }
 }
 
-pub fn factorial<'a, T: Clone + Mul<T,T> + One + Zero + fmt::Show>() -> Unfold<'a, T, (Option<T>, T)> {
+pub fn factorial<'a, T: Clone + Mul<T,T> + One + Zero>() -> Unfold<'a, T, (Option<T>, T)> {
     let one_: T = one();
     let zero_: T = zero();
     Unfold::new((Some(one_), zero_), |st| {
@@ -138,3 +137,14 @@ impl Digits for u32 {}
 impl Digits for u64 {}
 impl Digits for uint {}
 impl Digits for BigUint {}
+
+// Euclid's algorithm
+pub fn gcd<T: Clone + Div<T,T> + Zero + Rem<T,T> + Ord>(a: T, b: T) -> T {
+    let (mut a, mut b) = if a < b { (b, a) } else { (a, b) };
+    while !b.is_zero() {
+        let t = a;
+        a = b;
+        b = t % a
+    }
+    return a
+}
