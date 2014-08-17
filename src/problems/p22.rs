@@ -1,26 +1,10 @@
+use io::words;
 use sort::quicksort;
-use std::ascii::{AsciiCast, AsciiStr};
 use std::iter::AdditiveIterator;
-use std::io::{BufferedReader, File};
 
 euler_problem!(b"f2c9c91cb025746f781fa4db8be3983f", w, {
     static path: &'static str = "data/names.txt";
-    let mut names = Vec::new();
-    {
-        let file = File::open(&Path::new(path));
-        let mut reader = BufferedReader::new(file);
-        loop {
-            static sep: u8 = b',';
-            let name = reader.read_until(sep).unwrap();
-            let last = name.len() - 1;
-            if name[last] == sep {
-                names.push(name.slice(1, last - 1).to_ascii().as_str_ascii().into_string());
-            } else {
-                names.push(name.slice(1, last).to_ascii().as_str_ascii().into_string());
-                break;
-            }
-        }
-    }
+    let mut names = words(&Path::new(path));
     quicksort(names.as_mut_slice());
     let sum = names.move_iter()
         .enumerate()

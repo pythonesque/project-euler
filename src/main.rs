@@ -5,6 +5,7 @@ extern crate libc;
 extern crate num;
 
 mod digit;
+mod io;
 mod math;
 mod problems;
 mod sort;

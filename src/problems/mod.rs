@@ -7,54 +7,51 @@ macro_rules! euler_problem(
             $body
         }
 
-        #[cfg(test)]
-        mod test {
-            #[test]
-            pub fn test() {
-                let mut process = match ::std::io::Command::new("md5sum").spawn() {
+        #[test]
+        pub fn test() {
+            let mut process = match ::std::io::Command::new("md5sum").spawn() {
+                Ok(p) => p,
+                Err(e) => {
+                    drop(write!(::std::io::stderr(), "Test ignored: I/O error {}", e));
+                    return
+                }
+            };
+            match process.stdin.take() {
+                Some(mut stdin) => match run(&mut stdin) {
                     Ok(p) => p,
                     Err(e) => {
                         drop(write!(::std::io::stderr(), "Test ignored: I/O error {}", e));
                         return
                     }
-                };
-                match process.stdin.take() {
-                    Some(mut stdin) => match super::run(&mut stdin) {
-                        Ok(p) => p,
-                        Err(e) => {
-                            drop(write!(::std::io::stderr(), "Test ignored: I/O error {}", e));
-                            return
-                        }
-                    },
-                    None => {
-                        drop(write!(::std::io::stderr(), "Test ignored: No standard input."));
-                        return
-                    }
+                },
+                None => {
+                    drop(write!(::std::io::stderr(), "Test ignored: No standard input."));
+                    return
                 }
-                let mut hash = [0u8, .. ::problems::SHA_SIZE];
-                match process.stdout {
-                    Some(ref mut stdout) => match stdout.read_at_least(::problems::SHA_SIZE, hash) {
-                        Ok(_) => (),
-                        Err(e) => {
-                            drop(write!(::std::io::stderr(), "Test ignored: I/O error {}", e));
-                            return
-                        }
-                    },
-                    None => {
-                        drop(write!(::std::io::stderr(), "Test ignored: No standard output."));
-                        return
-                    }
-                }
-                let status = match process.wait() {
-                    Ok(s) => s,
+            }
+            let mut hash = [0u8, .. ::problems::SHA_SIZE];
+            match process.stdout {
+                Some(ref mut stdout) => match stdout.read_at_least(::problems::SHA_SIZE, hash) {
+                    Ok(_) => (),
                     Err(e) => {
                         drop(write!(::std::io::stderr(), "Test ignored: I/O error {}", e));
                         return
                     }
-                };
-                assert!(status.success());
-                assert!(hash.as_slice() == $hash);
+                },
+                None => {
+                    drop(write!(::std::io::stderr(), "Test ignored: No standard output."));
+                    return
+                }
             }
+            let status = match process.wait() {
+                Ok(s) => s,
+                Err(e) => {
+                    drop(write!(::std::io::stderr(), "Test ignored: I/O error {}", e));
+                    return
+                }
+            };
+            assert!(status.success());
+            assert!(hash.as_slice() == $hash);
         }
     )
 )
@@ -96,6 +93,7 @@ pub mod p36;
 pub mod p37;
 pub mod p38;
 pub mod p41;
+pub mod p42;
 pub mod p43;
 pub mod p46;
 pub mod p47;
@@ -150,6 +148,7 @@ pub mod main {
             37 => super::p37::run(w),
             38 => super::p38::run(w),
             41 => super::p41::run(w),
+            42 => super::p42::run(w),
             43 => super::p43::run(w),
             46 => super::p46::run(w),
             47 => super::p47::run(w),
